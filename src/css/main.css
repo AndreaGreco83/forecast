@@ -1,0 +1,99 @@
+body{
+  margin: 0;
+}
+
+.slider-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+
+.pagination {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.pagination-button {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #888;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.pagination-button.active {
+  background-color: #333;
+}
+
+.prev-button,
+.next-button {
+  display: none; /* Hide buttons by default */
+}
+
+/* Add media query for desktop view */
+@media screen and (min-width: 768px) {
+  .prev-button,
+  .next-button {
+    display: block; /* Show buttons for desktop */
+  }
+}
+
+.slide-container{
+  height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-size: cover;
+}
+.slide{
+  font-family: Arial, Helvetica, sans-serif;
+  color: #000000;
+  text-align: center;
+  width: 100%;
+  flex: 0 0 100%;
+}
+
+.city{
+  font-size: 40px;
+}
+
+.forecast{
+  font-size: 36px;
+}
+
+.temperature{
+  font-size: 300px;
+}
+
+.min-max{
+  font-size: 36px;
+}
+
+.week{
+  font-size: 36px;
+  display: flex;
+  justify-content: center;
+  background-color: red;
+}
+
+.day{
+  margin: 0px 5px;
+}
