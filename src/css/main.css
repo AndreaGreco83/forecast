@@ -9,49 +9,76 @@ body{
   margin: 0 auto;
 }
 
-img {
-  width: 100%;
-  height: auto;
-}
-
 .slider {
   display: flex;
   transition: transform 0.3s ease-in-out;
 }
 
-.pagination {
+.slide {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #ffffff;
   text-align: center;
-  margin-top: 10px;
+  width: 100%;
+  flex: 0 0 100%;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+.prev-button,
+.next-button {
+  /* remove default button styling*/
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  text-align: inherit;
+  font: inherit;
+  border-radius: 0;
+  appearance: none;
+
+  width: 20px;
+  display: none; /* Hide buttons by default */
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.prev-button{
+  left: 2%;
+}
+
+.next-button{
+  right: 2%;
+}
+
+.pagination {
+  position: absolute;
+  top: 20rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  text-align: center;
 }
 
 .pagination-button {
   display: inline-block;
-  width: 10px;
-  height: 10px;
-  background-color: #888;
+  width: 20px;
+  height: 20px;
+  border: 4px solid #ffffff;
+  background-color: transparent;
   border-radius: 50%;
   margin: 0 5px;
   cursor: pointer;
 }
 
 .pagination-button.active {
-  background-color: #333;
+  background-color: #ffffff;
 }
 
-.prev-button,
-.next-button {
-  display: none; /* Hide buttons by default */
-}
-
-/* Add media query for desktop view */
-@media screen and (min-width: 768px) {
-  .prev-button,
-  .next-button {
-    display: block; /* Show buttons for desktop */
-  }
-}
-
-.slide-container{
+.widget-container{
+  width: 100%;
   height: 100vh;
   display: -webkit-box;
   display: -webkit-flex;
@@ -63,37 +90,69 @@ img {
   align-items: center;
   background-size: cover;
 }
-.slide{
-  font-family: Arial, Helvetica, sans-serif;
-  color: #000000;
-  text-align: center;
+
+.widget{
   width: 100%;
-  flex: 0 0 100%;
 }
 
 .city{
-  font-size: 40px;
+  font-size: 5rem;
+  font-weight: bold;
 }
 
 .forecast{
-  font-size: 36px;
+  margin-top: 20px;
+  font-size: 3rem;
 }
 
 .temperature{
-  font-size: 300px;
+  font-size: 22rem;
 }
 
-.min-max{
-  font-size: 36px;
+.minmax{
+  font-size: 5rem;
 }
 
 .week{
-  font-size: 36px;
+  margin-top: 80px;
+  font-size: 2.5rem;
   display: flex;
   justify-content: center;
-  background-color: red;
 }
 
 .day{
-  margin: 0px 5px;
+  margin: 0px 15px;
+}
+
+/* Add media query for desktop view */
+@media screen and (min-width: 1024px) {
+  .prev-button,
+  .next-button {
+    display: block; /* Show buttons for desktop */
+  }
+
+  .pagination {
+    position: unset;
+    top: unset;
+    left: unset;
+    transform: unset;
+    margin: 10px 0px;
+  }
+
+  .pagination-button {
+    border: 2px solid #000000;
+  }
+
+  .pagination-button.active {
+    background-color: #000000;
+  }
+
+  .widget-container{
+    max-height: 500px;
+  }
+
+  .city{
+    font-size: 5rem;
+    font-weight: bold;
+  }
 }

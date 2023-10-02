@@ -1,8 +1,8 @@
-const locations = { "milan":{lat:"45.464203",long:"9.189982", name:"Milan"},
-                    "london":{lat:"51.507351",long:"-0.127758", name:"London"},
-                    "bangkok":{lat:"13.756331",long:"100.501762", name:"Bangkok"},
-                    "los-angeles":{lat:"34.052235",long:"-118.243683", name:"Los Angeles"},
-                    "tokyo":{lat:"35.689487",long:"139.691711", name:"Tokyo"}};
+const locations = { "milan":{lat:"45.464203",long:"9.189982", name:"Milan", photo:"../assets/milan.jpg"},
+                    "london":{lat:"51.507351",long:"-0.127758", name:"London", photo:"../assets/london.jpg"},
+                    "bangkok":{lat:"13.756331",long:"100.501762", name:"Bangkok", photo:"../assets/bangkok.jpg"},
+                    "los-angeles":{lat:"34.052235",long:"-118.243683", name:"Los Angeles", photo:"../assets/los_angeles.jpg"},
+                    "tokyo":{lat:"35.689487",long:"139.691711", name:"Tokyo", photo:"../assets/tokyo.jpg"}};
 
 const weatherConditions = { 0:"Clear sky",
                             1:"Partly cloudy",
@@ -53,7 +53,7 @@ function populateSlider (response,key) {
   const days = convertToForecastDays(response.daily);
   let slide= document.querySelector(`#${key}`);
   slide.querySelector(".forecast").innerHTML +=`${days[0].weatherCode}`;
-  slide.querySelector(".temperature").innerHTML +=`${parseInt(response.current_weather.temperature)}`;
+  slide.querySelector(".temperature").innerHTML +=`${parseInt(response.current_weather.temperature)}`+"°";
   slide.querySelector(".min").innerHTML +=`${days[0].min}`;
   slide.querySelector(".max").innerHTML +=`${days[0].max}`;
   let dayElements =slide.querySelectorAll(".day");
@@ -61,29 +61,6 @@ function populateSlider (response,key) {
   dayElements.forEach( (element,index) =>{
     element.innerHTML += `${days[index].min}/${days[index].max}`;
   });
-    /*let slider= document.querySelector(".slider");
-    console.log(response);
-    const days = convertToForecastDays(response.daily);
-    slider.innerHTML += `
-    <div class="slide">
-      <div class="city">${city}</div>
-      <div class="forecast">${days[0].weatherCode}</div>
-      <div class="temperature">28</div>
-      <div class="minmax">
-        <span class="min">${days[0].min}</span>
-        /
-        <span class="max">${days[0].max}</span>
-      </div>
-      <div class="week">
-        <div class="day">${days[1].min}/${days[1].max}</div>
-        <div class="day">${days[2].min}/${days[2].max}</div>
-        <div class="day">${days[3].min}/${days[3].max}</div>
-        <div class="day">${days[4].min}/${days[4].max}</div>
-        <div class="day">${days[5].min}/${days[5].max}</div>
-        <div class="day">${days[6].min}/${days[6].max}</div>
-        <div class="day">${days[7].min}/${days[7].max}</div>
-      </div>
-    </div>`; */
 };
 
 function convertToForecastDays (unformattedData) {
@@ -115,12 +92,6 @@ document.addEventListener("DOMContentLoaded", function () {
     slider.style.transform = `translateX(-${currentIndex * 100}%)`;
   }
 
-  // Function to show or hide arrow buttons based on current slide
-  function updateArrowButtons() {
-    prevButton.style.display = currentIndex === 0 ? "none" : "block";
-    nextButton.style.display = currentIndex === slides.length - 1 ? "none" : "block";
-  }
-
   // Function to update pagination bullets
   function updatePagination() {
     pagination.innerHTML = "";
@@ -138,6 +109,12 @@ document.addEventListener("DOMContentLoaded", function () {
       });
       pagination.appendChild(bullet);
     });
+  }
+
+  // Function to show or hide arrow buttons based on current slide
+  function updateArrowButtons() {
+    prevButton.style.visibility = currentIndex === 0 ? "hidden" : "visible";
+    nextButton.style.visibility = currentIndex === slides.length - 1 ? "hidden" : "visible";
   }
 
   // Event listener for the previous button
@@ -160,7 +137,35 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Swipe functionality for mobile (same as previous code)
+  // Swipe functionality for mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  slider.addEventListener("touchstart", function (e) {
+    touchStartX = e.touches[0].clientX;
+  });
+
+  slider.addEventListener("touchend", function (e) {
+    touchEndX = e.changedTouches[0].clientX;
+
+    if (touchStartX - touchEndX > 50) {
+      // Swipe left
+      if (currentIndex < slides.length - 1) {
+        currentIndex++;
+        updateSlider();
+        updateArrowButtons();
+        updatePagination();
+      }
+    } else if (touchEndX - touchStartX > 50) {
+      // Swipe right
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateSlider();
+        updateArrowButtons();
+        updatePagination();
+      }
+    }
+  });
 
   // Initial setup
   updateArrowButtons();
