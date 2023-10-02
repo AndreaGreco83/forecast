@@ -56,7 +56,7 @@ img {
 
 .pagination {
   position: absolute;
-  top: 20rem;
+  top: 40px;
   left: 50%;
   transform: translate(-50%, 0);
   text-align: center;
@@ -121,7 +121,7 @@ img {
 }
 
 .day{
-  margin: 0px 15px;
+  margin: 0px 5px;
 }
 
 /* Add media query for desktop view */
@@ -140,6 +140,8 @@ img {
   }
 
   .pagination-button {
+    width: 10px;
+    height: 10px;
     border: 2px solid #000000;
   }
 
@@ -152,7 +154,23 @@ img {
   }
 
   .city{
-    font-size: 5rem;
-    font-weight: bold;
+    font-size: 2.5rem;
+  }
+
+  .forecast {
+    font-size: 1.8rem;
+  }
+
+  .temperature{
+    font-size: 9rem;
+  }
+
+  .minmax{
+    font-size: 1.8rem;
+  }
+
+  .week{
+    margin-top: 20px;
+    font-size: 1.5rem;
   }
 }

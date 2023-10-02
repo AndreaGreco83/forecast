@@ -1,9 +1,11 @@
-const locations = { "milan":{lat:"45.464203",long:"9.189982", name:"Milan", photo:"../assets/milan.jpg"},
-                    "london":{lat:"51.507351",long:"-0.127758", name:"London", photo:"../assets/london.jpg"},
-                    "bangkok":{lat:"13.756331",long:"100.501762", name:"Bangkok", photo:"../assets/bangkok.jpg"},
-                    "los-angeles":{lat:"34.052235",long:"-118.243683", name:"Los Angeles", photo:"../assets/los_angeles.jpg"},
-                    "tokyo":{lat:"35.689487",long:"139.691711", name:"Tokyo", photo:"../assets/tokyo.jpg"}};
+/* Mocked data to collect coordinates used in API call */
+const locations = { "milan":{lat:"45.464203",long:"9.189982", name:"Milan"},
+                    "london":{lat:"51.507351",long:"-0.127758", name:"London"},
+                    "bangkok":{lat:"13.756331",long:"100.501762", name:"Bangkok"},
+                    "los-angeles":{lat:"34.052235",long:"-118.243683", name:"Los Angeles"},
+                    "tokyo":{lat:"35.689487",long:"139.691711", name:"Tokyo"}};
 
+/* Mocked data to convert weather condition code returned from API call into readable weather condition */
 const weatherConditions = { 0:"Clear sky",
                             1:"Partly cloudy",
                             2:"Partly cloudy",
@@ -42,8 +44,12 @@ function callApi(key,location){
   const xhr = new XMLHttpRequest();
   xhr.open("GET", `https://api.open-meteo.com/v1/forecast?latitude=${location.lat}&longitude=${location.long}&daily=weathercode&daily=temperature_2m_max,temperature_2m_min&current_weather=true&timezone=Europe%2FBerlin&forecast_days=14`);
   xhr.onload = function() {
-    response = JSON.parse(xhr.response);
-    populateSlider(response,key);
+    if (xhr.status === 200) {
+      response = JSON.parse(xhr.response);
+      populateSlider(response,key);
+    } else {
+      console.error("Failed to fetch Meteo informations");
+    }
   };
   xhr.send();
 }
@@ -54,15 +60,15 @@ function populateSlider (response,key) {
   let slide= document.querySelector(`#${key}`);
   slide.querySelector(".forecast").innerHTML +=`${days[0].weatherCode}`;
   slide.querySelector(".temperature").innerHTML +=`${parseInt(response.current_weather.temperature)}`+"°";
-  slide.querySelector(".min").innerHTML +=`${days[0].min}`;
-  slide.querySelector(".max").innerHTML +=`${days[0].max}`;
+  slide.querySelector(".min").innerHTML +=`${days[0].min}`+"°";
+  slide.querySelector(".max").innerHTML +=`${days[0].max}`+"°";
   let dayElements =slide.querySelectorAll(".day");
-  console.log(dayElements);
   dayElements.forEach( (element,index) =>{
-    element.innerHTML += `${days[index].min}/${days[index].max}`;
+    element.innerHTML += `${days[index].min}`+"°/"+`${days[index].max}`+"°";
   });
 };
 
+/* Function used to recover dta for the week days forecasts and  weather code and format them to be displayed correctly by the widget*/
 function convertToForecastDays (unformattedData) {
   let formattedData = [];
   for (i=0; i<unformattedData.time.length; i++){
@@ -78,6 +84,8 @@ function convertWeatherCodeToWeatherName (weatherCode){
   return weatherName;
 }
 
+
+/* Slider functionality */
 document.addEventListener("DOMContentLoaded", function () {
   const slider = document.querySelector(".slider");
   const slides = document.querySelectorAll(".slide");
