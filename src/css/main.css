@@ -15,7 +15,7 @@ body{
 }
 
 .slide {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Gabarito', cursive;
   color: #ffffff;
   text-align: center;
   width: 100%;
@@ -89,6 +89,8 @@ img {
   -ms-flex-align: center;
   align-items: center;
   background-size: cover;
+  background-position-x: 50%;
+  background-position-y: 50%;
 }
 
 .widget{
@@ -115,7 +117,7 @@ img {
 
 .week{
   margin-top: 80px;
-  font-size: 2.5rem;
+  font-size: 2rem;
   display: flex;
   justify-content: center;
 }
